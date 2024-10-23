@@ -23,18 +23,20 @@ public class LoginSuperAdmin
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--incognito");
         driver = new EdgeDriver(options);
-        driver.get("https://nidlp.ntgcloud.net/login/internal");
+        driver.get("https://nidlp.ntgcloud.net/internal-login");
 
     }
     @Test
     public static void login() throws InterruptedException {
         /*define loginBtn through nafath*/
-        WebElement loginButton = driver.findElement(By.className("login-button"));
-        //loginButton.click();
+        WebElement loginButton = driver.findElement(By.xpath("//button[contains(text(), ' الدخول عبر النفاذ الوطني الموحد')]"));
+        //WebElement loginButton = driver.findElement(By.className("login-button"));
+        loginButton.click();
         /*define the field of national id*/
         /*send data to national id field*/
         //WebElement nationalId = driver.findElement(By.id("idNumber"));
         /*define the login btn*/
+
 
         // got to the postman to send the key and go to the landing page
 
@@ -42,6 +44,6 @@ public class LoginSuperAdmin
     @AfterTest
     public static void AfterTest()
     {
-       // driver.close();
+       driver.close();
     }
 }
