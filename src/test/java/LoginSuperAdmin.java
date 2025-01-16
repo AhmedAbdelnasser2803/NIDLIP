@@ -3,47 +3,57 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import java.time.Duration;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginSuperAdmin
+
 {
-    private static String nationalID = "2353300581";
     private static WebDriver driver ;
     @BeforeTest
-    public static void openBrowser()
+    public void openBrowser()
     {
-        EdgeOptions options = new EdgeOptions();
-        options.addArguments("--incognito");
-        driver = new EdgeDriver(options);
-        driver.get("https://nidlp.ntgcloud.net/internal-login");
-
+        ChromeOptions options = new ChromeOptions();
+        driver = new ChromeDriver(options);
+        driver.get("https://nidlpdev.ntgcloud.net/external-login");
+        driver.manage().window().maximize();
+        //wiat until the page is completed loading
+        //JavascriptExecutor js = (JavascriptExecutor) driver;
+        /*while (!js.executeScript("return document.readyState").toString().equals("complete")) {
+            try {
+                // Sleep for a short time to avoid consuming too much CPU
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }*/
     }
     @Test
-    public static void login() throws InterruptedException {
-        /*define loginBtn through nafath*/
-        WebElement loginButton = driver.findElement(By.xpath("//button[contains(text(), ' الدخول عبر النفاذ الوطني الموحد')]"));
-        //WebElement loginButton = driver.findElement(By.className("login-button"));
-        loginButton.click();
-        /*define the field of national id*/
-        /*send data to national id field*/
-        //WebElement nationalId = driver.findElement(By.id("idNumber"));
-        /*define the login btn*/
+    public void login() throws InterruptedException {
+        By companyRadioButton = By.xpath("//label[@for='company']");
+        By nextBtn = By.xpath("//button[@class='next-button']");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(companyRadioButton));
+        driver.findElement(companyRadioButton).click();
 
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        /*we can scroll down to get the element*/
+        //js.executeScript("window.scrollBy(0,10000)");
+        /*we can to zoom out to get the elememnt */
+        js.executeScript("document.body.style.zoom = '50%'");
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn));
+        driver.findElement(nextBtn).click();
 
-        // got to the postman to send the key and go to the landing page
 
     }
     @AfterTest
-    public static void AfterTest()
+    public void AfterTest()
     {
-       driver.close();
+      driver.close();
     }
 }
