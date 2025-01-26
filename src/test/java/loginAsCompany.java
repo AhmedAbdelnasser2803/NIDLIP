@@ -1,14 +1,13 @@
 import org.example.SelectCompanyOrAgencyPage;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.openqa.selenium.JavascriptExecutor;
 
-public class LoginSuperAdmin
-{
+public class loginAsCompany {
     public static WebDriver driver ;
     private static WebDriver driver2;
     @BeforeTest
@@ -35,6 +34,6 @@ public class LoginSuperAdmin
     @AfterTest
     public void AfterTest ()
     {
-      driver.close();
+        driver.close();
     }
 }
